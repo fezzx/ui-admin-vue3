@@ -1,37 +1,73 @@
-import { defineStore } from "pinia";
-import { store } from "../index";
+import { defineStore } from 'pinia'
+import { store } from '../index'
 import { setCssVar, humpToUnderline } from '@/utils'
 import { ElMessage } from 'element-plus'
-import { CACHE_KEY, useCache } from "@/hooks/web/useCache";
-import { ElementPlusSize } from "@/types/elementPlus";
+import { CACHE_KEY, useCache } from '@/hooks/web/useCache'
+import { ElementPlusSize } from '@/types/elementPlus'
 import { LayoutType } from '@/types/layout'
 import { ThemeTypes } from '@/types/theme'
 
-const { wsCache } = useCache();
+const { wsCache } = useCache()
 
 interface AppState {
+  breadcrumb: boolean
+  breadcrumbIcon: boolean
   collapse: boolean
-  currentSize: ElementPlusSize
+  uniqueOpened: boolean
+  hamburger: boolean
+  screenfull: boolean
+  search: boolean
+  size: boolean
+  locale: boolean
+  message: boolean
+  tagsView: boolean
+  tagsViewIcon: boolean
+  logo: boolean
+  fixedHeader: boolean
   greyMode: boolean
-  theme: ThemeTypes
-  mobile: boolean
+  pageLoading: boolean
   layout: LayoutType
   title: string
-  pageLoading: boolean
+  userInfo: string
   isDark: boolean
+  currentSize: ElementPlusSize
+  sizeMap: ElementPlusSize[]
+  mobile: boolean
+  footer: boolean
+  theme: ThemeTypes
+  fixedMenu: boolean
 }
 
-export const useAppStore = defineStore("app", {
+export const useAppStore = defineStore('app', {
   state: (): AppState => {
     return {
-      collapse: false, // 折叠菜单
+      userInfo: 'userInfo', // 登录信息存储字段-建议每个项目换一个字段，避免与其他项目冲突
+      sizeMap: ['default', 'large', 'small'],
       mobile: false, // 是否是移动端
       title: import.meta.env.VITE_APP_TITLE, // 标题
       pageLoading: false, // 路由跳转loading
-      currentSize: wsCache.get("default") || "default", // 组件尺寸
+
+      breadcrumb: true, // 面包屑
+      breadcrumbIcon: true, // 面包屑图标
+      collapse: false, // 折叠菜单
+      uniqueOpened: true, // 是否只保持一个子菜单的展开
+      hamburger: true, // 折叠图标
+      screenfull: true, // 全屏图标
+      search: true, // 搜索图标
+      size: true, // 尺寸图标
+      locale: true, // 多语言图标
+      message: true, // 消息图标
+      tagsView: true, // 标签页
+      tagsViewIcon: true, // 是否显示标签图标
+      logo: true, // logo
+      fixedHeader: true, // 固定toolheader
+      footer: true, // 显示页脚
       greyMode: false, // 是否开始灰色模式，用于特殊悼念日
+      fixedMenu: wsCache.get('fixedMenu') || false, // 是否固定菜单
+
       layout: wsCache.get(CACHE_KEY.LAYOUT) || 'classic', // layout布局
       isDark: wsCache.get(CACHE_KEY.IS_DARK) || false, // 是否是暗黑模式
+      currentSize: wsCache.get('default') || 'default', // 组件尺寸
       theme: wsCache.get(CACHE_KEY.THEME) || {
         // 主题色
         elColorPrimary: '#409eff',
@@ -62,17 +98,56 @@ export const useAppStore = defineStore("app", {
         // 头部边框颜色
         topToolBorderColor: '#eee'
       }
-    };
+    }
   },
   getters: {
-    getCurrentSize(): ElementPlusSize {
-      return this.currentSize;
+    getBreadcrumb(): boolean {
+      return this.breadcrumb
+    },
+    getBreadcrumbIcon(): boolean {
+      return this.breadcrumbIcon
+    },
+    getCollapse(): boolean {
+      return this.collapse
+    },
+    getUniqueOpened(): boolean {
+      return this.uniqueOpened
+    },
+    getHamburger(): boolean {
+      return this.hamburger
+    },
+    getScreenfull(): boolean {
+      return this.screenfull
+    },
+    getSize(): boolean {
+      return this.size
+    },
+    getLocale(): boolean {
+      return this.locale
+    },
+    getMessage(): boolean {
+      return this.message
+    },
+    getTagsView(): boolean {
+      return this.tagsView
+    },
+    getTagsViewIcon(): boolean {
+      return this.tagsViewIcon
+    },
+    getLogo(): boolean {
+      return this.logo
+    },
+    getFixedHeader(): boolean {
+      return this.fixedHeader
     },
     getGreyMode(): boolean {
-      return this.greyMode;
+      return this.greyMode
     },
-    getMobile(): boolean {
-      return this.mobile
+    getFixedMenu(): boolean {
+      return this.fixedMenu
+    },
+    getPageLoading(): boolean {
+      return this.pageLoading
     },
     getLayout(): LayoutType {
       return this.layout
@@ -80,25 +155,77 @@ export const useAppStore = defineStore("app", {
     getTitle(): string {
       return this.title
     },
+    getUserInfo(): string {
+      return this.userInfo
+    },
     getIsDark(): boolean {
       return this.isDark
     },
+    getCurrentSize(): ElementPlusSize {
+      return this.currentSize
+    },
+    getSizeMap(): ElementPlusSize[] {
+      return this.sizeMap
+    },
+    getMobile(): boolean {
+      return this.mobile
+    },
+    getTheme(): ThemeTypes {
+      return this.theme
+    },
+    getFooter(): boolean {
+      return this.footer
+    }
   },
   actions: {
-    setCurrentSize(currentSize: ElementPlusSize) {
-      this.currentSize = currentSize;
-      wsCache.set("currentSize", this.currentSize);
+    setBreadcrumb(breadcrumb: boolean) {
+      this.breadcrumb = breadcrumb
+    },
+    setBreadcrumbIcon(breadcrumbIcon: boolean) {
+      this.breadcrumbIcon = breadcrumbIcon
+    },
+    setCollapse(collapse: boolean) {
+      this.collapse = collapse
+    },
+    setUniqueOpened(uniqueOpened: boolean) {
+      this.uniqueOpened = uniqueOpened
+    },
+    setHamburger(hamburger: boolean) {
+      this.hamburger = hamburger
+    },
+    setScreenfull(screenfull: boolean) {
+      this.screenfull = screenfull
+    },
+    setSize(size: boolean) {
+      this.size = size
+    },
+    setLocale(locale: boolean) {
+      this.locale = locale
+    },
+    setMessage(message: boolean) {
+      this.message = message
+    },
+    setTagsView(tagsView: boolean) {
+      this.tagsView = tagsView
+    },
+    setTagsViewIcon(tagsViewIcon: boolean) {
+      this.tagsViewIcon = tagsViewIcon
+    },
+    setLogo(logo: boolean) {
+      this.logo = logo
+    },
+    setFixedHeader(fixedHeader: boolean) {
+      this.fixedHeader = fixedHeader
     },
     setGreyMode(greyMode: boolean) {
-      this.greyMode = greyMode;
+      this.greyMode = greyMode
     },
-    setCssVarTheme() {
-      for (const key in this.theme) {
-        setCssVar(`--${humpToUnderline(key)}`, this.theme[key])
-      }
+    setFixedMenu(fixedMenu: boolean) {
+      wsCache.set('fixedMenu', fixedMenu)
+      this.fixedMenu = fixedMenu
     },
-    setMobile(mobile: boolean) {
-      this.mobile = mobile
+    setPageLoading(pageLoading: boolean) {
+      this.pageLoading = pageLoading
     },
     setLayout(layout: LayoutType) {
       if (this.mobile && layout !== 'classic') {
@@ -108,11 +235,8 @@ export const useAppStore = defineStore("app", {
       this.layout = layout
       wsCache.set(CACHE_KEY.LAYOUT, this.layout)
     },
-    setCollapse(collapse: boolean) {
-      this.collapse = collapse
-    },
-    setPageLoading(pageLoading: boolean) {
-      this.pageLoading = pageLoading
+    setTitle(title: string) {
+      this.title = title
     },
     setIsDark(isDark: boolean) {
       this.isDark = isDark
@@ -125,10 +249,29 @@ export const useAppStore = defineStore("app", {
       }
       wsCache.set(CACHE_KEY.IS_DARK, this.isDark)
     },
+    setCurrentSize(currentSize: ElementPlusSize) {
+      this.currentSize = currentSize
+      wsCache.set('currentSize', this.currentSize)
+    },
+    setMobile(mobile: boolean) {
+      this.mobile = mobile
+    },
+    setTheme(theme: ThemeTypes) {
+      this.theme = Object.assign(this.theme, theme)
+      wsCache.set(CACHE_KEY.THEME, this.theme)
+    },
+    setCssVarTheme() {
+      for (const key in this.theme) {
+        setCssVar(`--${humpToUnderline(key)}`, this.theme[key])
+      }
+    },
+    setFooter(footer: boolean) {
+      this.footer = footer
+    }
   },
-  persist: false,
-});
+  persist: false
+})
 
 export const useAppStoreWithOut = () => {
-  return useAppStore(store);
-};
+  return useAppStore(store)
+}
