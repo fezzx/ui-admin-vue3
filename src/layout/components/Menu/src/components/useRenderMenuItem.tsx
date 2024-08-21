@@ -10,6 +10,7 @@ export const useRenderMenuItem = () =>
   // allRouters: AppRouteRecordRaw[] = [],
   {
     const renderMenuItem = (routers: AppRouteRecordRaw[], parentPath = '/') => {
+      
       return routers
         .filter((v) => !v.meta?.hidden)
         .map((v) => {
@@ -22,6 +23,10 @@ export const useRenderMenuItem = () =>
             (!onlyOneChild?.children || onlyOneChild?.noShowingChildren) &&
             !meta?.alwaysShow
           ) {
+            // console.log('useRenderMenuItem.tsx->renderMenuTitle:', renderMenuTitle(onlyOneChild ? onlyOneChild?.meta : meta))
+            console.log('useRenderMenuItem.tsx->useRenderMenuItem->renderMenuItem ElMenuItem onlyOneChild:', onlyOneChild)
+            console.log('useRenderMenuItem.tsx->useRenderMenuItem->renderMenuItem ElMenuItem meta:', meta)
+
             return (
               <ElMenuItem
                 index={onlyOneChild ? pathResolve(fullPath, onlyOneChild.path) : fullPath}
