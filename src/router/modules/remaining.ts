@@ -31,6 +31,36 @@ const remainingRouter: AppRouteRecordRaw[] = [
       noTagsView: true,
     },
   },
+  {
+    path: '/diy',
+    name: 'DiyCenter',
+    meta: { hidden: true },
+    component: Layout,
+    children: [
+      {
+        path: 'template/decorate/:id',
+        name: 'DiyTemplateDecorate',
+        meta: {
+          title: '模板装修',
+          noCache: true,
+          hidden: true,
+          activeMenu: '/mall/promotion/diy/template'
+        },
+        component: () => import('@/views/mall/promotion/diy/template/decorate.vue')
+      },
+      {
+        path: 'page/decorate/:id',
+        name: 'DiyPageDecorate',
+        meta: {
+          title: '页面装修',
+          noCache: true,
+          hidden: true,
+          activeMenu: '/mall/promotion/diy/page'
+        },
+        component: () => import('@/views/mall/promotion/diy/page/decorate.vue')
+      }
+    ]
+  },
 ];
 
 export default remainingRouter;

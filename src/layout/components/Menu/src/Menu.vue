@@ -79,10 +79,10 @@ export default defineComponent({
     }
 
     const renderMenu = () => {
-		console.log('Menu.vue->renderMenu menuMode:', unref(menuMode))
-		console.log('Menu.vue->renderMenu layout:', unref(layout))
-		console.log('Menu.vue->renderMenu collapse:', unref(collapse))
-		console.log('Menu.vue->renderMenu uniqueOpened:', unref(uniqueOpened))
+		// console.log('Menu.vue->renderMenu menuMode:', unref(menuMode))
+		// console.log('Menu.vue->renderMenu layout:', unref(layout))
+		// console.log('Menu.vue->renderMenu collapse:', unref(collapse))
+		// console.log('Menu.vue->renderMenu uniqueOpened:', unref(uniqueOpened))
       return (
         <ElMenu
           defaultActive={unref(activeMenu)}

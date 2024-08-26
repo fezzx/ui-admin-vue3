@@ -24,8 +24,8 @@ export const useRenderMenuItem = () =>
             !meta?.alwaysShow
           ) {
             // console.log('useRenderMenuItem.tsx->renderMenuTitle:', renderMenuTitle(onlyOneChild ? onlyOneChild?.meta : meta))
-            console.log('useRenderMenuItem.tsx->useRenderMenuItem->renderMenuItem ElMenuItem onlyOneChild:', onlyOneChild)
-            console.log('useRenderMenuItem.tsx->useRenderMenuItem->renderMenuItem ElMenuItem meta:', meta)
+            // console.log('useRenderMenuItem.tsx->useRenderMenuItem->renderMenuItem ElMenuItem onlyOneChild:', onlyOneChild)
+            // console.log('useRenderMenuItem.tsx->useRenderMenuItem->renderMenuItem ElMenuItem meta:', meta)
 
             return (
               <ElMenuItem

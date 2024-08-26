@@ -58,6 +58,7 @@ const whiteList = [
 
 // 路由加载前
 router.beforeEach(async (to, from, next) => {
+  console.log('permission.ts->router.beforeEach to:', to)
   start()
   loadStart()
   if (getAccessToken()) {
@@ -68,6 +69,9 @@ router.beforeEach(async (to, from, next) => {
       const dictStore = useDictStoreWithOut()
       const userStore = useUserStoreWithOut()
       const permissionStore = usePermissionStoreWithOut()
+      // console.log('permission.ts->router.beforeEach dictStore:', dictStore)
+      // console.log('permission.ts->router.beforeEach userStore:', userStore)
+      // console.log('permission.ts->router.beforeEach permissionStore:', permissionStore)
       if (!dictStore.getIsSetDict) {
         await dictStore.setDictMap()
       }
@@ -77,6 +81,7 @@ router.beforeEach(async (to, from, next) => {
         isRelogin.show = false
         // 后端过滤菜单
         await permissionStore.generateRoutes()
+        console.log('permission.ts->router.beforeEach generateRoutes:', permissionStore.getAddRouters)
         permissionStore.getAddRouters.forEach((route) => {
           router.addRoute(route as unknown as RouteRecordRaw) // 动态添加可访问路由表
         })

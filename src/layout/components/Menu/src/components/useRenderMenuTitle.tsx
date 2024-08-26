@@ -7,7 +7,7 @@ export const useRenderMenuTitle = () => {
     const { t } = useI18n()
     const { title = 'Please set title', icon } = meta
 
-    console.log('useRenderMenuTitle.tsx->useRenderMenuTitle->renderMenuTitle meta:', meta)
+    // console.log('useRenderMenuTitle.tsx->useRenderMenuTitle->renderMenuTitle meta:', meta)
 
     return icon ? (
       <>
